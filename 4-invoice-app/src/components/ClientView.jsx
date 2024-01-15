@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 export const ClientView = ({tittle, client}) => {
-    const {name: nameClient, lastName, address} = client;
-    const {country, city, street, number} = address;
+    const {name: nameClient, lastName, address: {country, city, street, number}} = client;
+    // const {country, city, street, number} = address;
     return (
         <>
             <h3>{ tittle }</h3>
@@ -11,4 +12,10 @@ export const ClientView = ({tittle, client}) => {
         </>
     )
 
+}
+
+//Validaciones
+ClientView.propTypes = {
+    tittle: PropTypes.string.isRequired,
+    client: PropTypes.object.isRequired,
 }

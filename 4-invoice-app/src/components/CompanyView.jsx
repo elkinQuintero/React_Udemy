@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 export const CompanyView = ({tittle, company}) => {
     return (
         <>
@@ -8,4 +9,9 @@ export const CompanyView = ({tittle, company}) => {
             </ul>
         </>
     )
+}
+
+CompanyView.propTypes = {
+    tittle : PropTypes.string.isRequired,
+    company : PropTypes.object.isRequired,
 }
