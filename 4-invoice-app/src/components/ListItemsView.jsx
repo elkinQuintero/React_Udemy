@@ -36,6 +36,7 @@ export const ListItemsView = ({tittle, items}) => {
     )
 }
 
+//prop-types se usa para validaciones desde el frontend
 ListItemsView.propTypes = {
     tittle: PropTypes.string.isRequired,
     items: PropTypes.array.isRequired,
