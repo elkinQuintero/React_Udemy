@@ -5,6 +5,7 @@ import { CompanyView } from "./components/CompanyView";
 import { InvoiceView } from "./components/InvoiceView";
 import { ListItemsView } from "./components/ListItemsView";
 import { TotalView } from "./components/TotalView";
+import { FormItemsView } from "./components/FormItemsView";
 
 
 const invoiceInitial = {
@@ -39,24 +40,18 @@ export const InvoiceApp = () => {
 
     //De la siguiente frma optimizamos para que lea la primera vez lo que hay en la data y ya
 
+    const [activeForm, setActiveForm] = useState(false);
+
     const [total, setTotal] = useState(0);
 
     const [invoice, setInvoice] = useState(invoiceInitial);
 
     const [items, setItems] = useState([]); //Uso del useState para los items iniciales
 
-    const [formItemsState, setFormItemsState] = useState({ //Uso del useState para el formulario en general
-        product: '',
-        price : '',
-        quantify : '',
-    });
-
     const [counter, setCounter] = useState(4); //Uso del useSate para el contador del id que empieza en 4 prque en la data hay tres items
 
     //Destructuramos la factura para tener los datos por variable
     const {id, name, client, company} = invoice;
-
-    const {product, price, quantify} = formItemsState; //Destructuración para el form
 
 
     //UseEffect => función que se dispara cuando en los corchetes cuando el componente se crea o cuando cambia alguna dependecia o variable que se pone en los []
@@ -68,6 +63,10 @@ export const InvoiceApp = () => {
         setItems(data.items); //Y seteamos los valores iniciales para los items
     }, []);
 
+    useEffect(() => {
+        //
+    }, [counter])
+
     //En pocas palabras el use effect se ejecuta una vez cuando se crea el componente o también se le puede colocar dependencias
     useEffect(() => {
         setTotal(calculateTotal(items));
@@ -78,36 +77,25 @@ export const InvoiceApp = () => {
     // const [quantifyValue, setQuantifyValue] = useState('');
 
 
-    const onInputChange = ({target: {name, value}}) => {
-        // console.log(name);
-        // console.log(value);
-        setFormItemsState({
-            ...formItemsState,
-            [name]: value
-        });
-        }
-
-    const onInvoiceItemsSubmit = (event) => {
-        event.preventDefault();
-        if(product.trim().length <= 1 || price.trim().length < 1 || isNaN(price.trim()) || quantify.trim().length < 1 || isNaN(quantify.trim())){
-            alert("Error en el formulario"); return;
-        }
+    const handlerAddItems = ({ product, price, quantify}) => {
 
         //SetItems función que permite actualizar la tabla con los items existentes mas los que se les va agregando
         setItems([...items, {
-        id : counter,
-        product: product.trim(),
-        price: +price.trim(), //Si anteponemos un + autmaticamente se convierte el String en entero o por medio edel parseInt()
-        quantify: parseInt(quantify.trim(), 10)
+            id : counter,
+            product: product.trim(),
+            price: +price.trim(), //Si anteponemos un + autmaticamente se convierte el String en entero o por medio edel parseInt()
+            quantify: parseInt(quantify.trim(), 10)
         }]);
 
-        setFormItemsState({
-            product : '',
-            price : '',
-            quantify : '',
-        });
-
         setCounter(counter+1); //Para incrementar el id
+    }
+
+    const handlerDeleteItem = (id) => {
+        setItems(items.filter(item => item.id !== id))
+    }
+
+    const onActiveForm = () => {
+        setActiveForm(!activeForm);
     }
 
     return (
@@ -130,8 +118,12 @@ export const InvoiceApp = () => {
                             </div>
                         </div>
                         <div className="py-3">
-                            <ListItemsView tittle="Productos de la factura" items={items}/>
+                            <ListItemsView tittle="Productos de la factura" items={items} handlerDeleteItem={id => handlerDeleteItem(id)}/>
                             <TotalView total = { total }/>
+                            <button className="btn btn-secondary" onClick={onActiveForm}>{ !activeForm? 'Agregar Item' : 'Cerrar Form' }</button>
+                            { !activeForm? '' : <FormItemsView handler={handlerAddItems}/>}
+                            {/* <FormItemsView handler={(newItem) => handlerAddItems(newItem)}/>  */}
+
 
                         </div>
                     </div>
