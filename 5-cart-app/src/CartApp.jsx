@@ -1,40 +1,50 @@
-import { useState } from "react";
+import { useEffect, useReducer } from "react";
 import { CartView } from "./components/CartView";
 import { CatalogView } from "./components/CatalogView";
+import { itemsReducer } from "./reducer/itemsReducer";
+import { AddProductCart, DeleteProductCart, UpdateQuantityProductCart } from "./reducer/itemsActions";
 
 const initialCartItems = JSON.parse(sessionStorage.getItem('cart')) || []; //SI CONTIENE ALGO LO PASA A UN OBJEO TODOS LOS ITEMS, SI NO, ENTONCES MUSTRA VACIO
 
 export const CartApp = () => {
 
-    const [cartItems, setCartItems] = useState(initialCartItems);
+    // const [cartItems, setCartItems] = useState(initialCartItems);
+
+    const [cartItems, dispatch ] = useReducer(itemsReducer, initialCartItems);
+
+
+    useEffect(() => {
+        sessionStorage.setItem('cart', JSON.stringify(cartItems));
+    },[cartItems])
 
     const handlerAddProductCart = (product) => {
 
         const hasItem = cartItems.find((i) => i.product.id === product.id);
         if (hasItem){
-            setCartItems([
-                ...cartItems.filter((i) => i.product.id !== product.id),
+            dispatch(
                 {
-                    product,
-                    quantity: hasItem.quantity + 1,
+                    type: UpdateQuantityProductCart,
+                    payload: product, //Es el objeto que vamos a enviar a la acción update
                 }
-            ]);
+            );
         } else {
-            setCartItems([
-                ...cartItems,
+            dispatch(
                 {
-                    product,
-                    quantity: 1,
+                    type: AddProductCart,
+                    payload: product,
                 }
-            ]);
+            );
         }
 
     }
 
     const handlerDeleteProductCart = (id) => {
-        setCartItems([
-            ...cartItems.filter((i) => i.product.id !== id)
-        ]);
+        dispatch (
+            {
+                type: DeleteProductCart,
+                payload: id,
+            }
+        );
     }
 
     return (
