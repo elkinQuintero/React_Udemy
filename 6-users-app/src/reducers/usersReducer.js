@@ -10,6 +10,9 @@ export const usersReducer = (state = [], action) => {
                 }
             ];
 
+        case 'removeUser':
+            return state.filter(user => user.id !== action.payload); //filtra todos los usuarios, menos el usuario con el mismmo id qu se este utilizando
+
         default:
             return state;
     }
