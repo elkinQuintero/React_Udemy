@@ -13,6 +13,16 @@ export const usersReducer = (state = [], action) => {
         case 'removeUser':
             return state.filter(user => user.id !== action.payload); //filtra todos los usuarios, menos el usuario con el mismmo id qu se este utilizando
 
+        case 'updateUser':
+            return state.map(u => {
+                if (u.id === action.payload.id){
+                    return {
+                        ...action.payload
+                    };
+                }
+                return u;
+            })
+
         default:
             return state;
     }
