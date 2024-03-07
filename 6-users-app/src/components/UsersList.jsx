@@ -15,8 +15,8 @@ export const UsersList = ({handlerUpdateUser, handlerRemoveUser, users}) => {
             </thead>
             <tbody>
                 {
-                    users.map(({id, username, email, password}) => ( //Importante que el map siempre va con parentesis despues del =>
-                        <UserRow key={id} id={id} username={username} email={email} password={password} handlerRemoveUser={handlerRemoveUser} handlerUpdateUser={handlerUpdateUser} />
+                    users.map(({id, username, email}) => ( //Importante que el map siempre va con parentesis despues del =>
+                        <UserRow key={id} id={id} username={username} email={email} handlerRemoveUser={handlerRemoveUser} handlerUpdateUser={handlerUpdateUser} />
                     ))
                 }
             </tbody>

@@ -8,8 +8,10 @@ export const CartRoutes = ({handlerAddProductCart, handlerDeleteProductCart, car
             <Routes>
                 <Route
                     path="catalog"
-                    element={<CatalogView handler={ handlerAddProductCart }/>}/>
-                <Route path="cart" element={(
+                    element={<CatalogView handler={ handlerAddProductCart }/>}
+                />
+                <Route
+                    path="cart" element={(
                     cartItems?.length <= 0 ?
                         <div className="alert alert-warning">No hay productos en el carrito de compras</div>
                         :
