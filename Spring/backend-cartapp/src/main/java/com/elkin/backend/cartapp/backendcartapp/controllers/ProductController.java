@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.elkin.backend.cartapp.backendcartapp.models.entities.Product;
 import com.elkin.backend.cartapp.backendcartapp.services.ProductService;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController //Controller se utiliza para trabajar con MVC (Vistas integradas en la aplicación de Spring. ej: tymelief)
 //@RequestMapping("/api") //Configura una ruta base o primaria
+@CrossOrigin(origins = "http://localhost:5173")
 public class ProductController {
 
     @Autowired
