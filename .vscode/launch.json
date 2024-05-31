@@ -1,12 +1,24 @@
 {
+    // "configurations": [
+    //     {
+    //         "type": "java",
+    //         "name": "Spring Boot-BackendCartappApplication<backend-cartapp>",
+    //         "request": "launch",
+    //         "cwd": "${workspaceFolder}",
+    //         "mainClass": "com.elkin.backend.cartapp.backendcartapp.BackendCartappApplication",
+    //         "projectName": "backend-cartapp",
+    //         "args": "",
+    //         "envFile": "${workspaceFolder}/.env"
+    //     }
+    // ]
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-BackendCartappApplication<backend-cartapp>",
+            "name": "Spring Boot-BackendUsersappApplication<backend-usersapp>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "mainClass": "com.elkin.backend.cartapp.backendcartapp.BackendCartappApplication",
-            "projectName": "backend-cartapp",
+            "mainClass": "com.elkin.backend.usersapp.backendusersapp.BackendUsersappApplication",
+            "projectName": "backend-usersapp",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
